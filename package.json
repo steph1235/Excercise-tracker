@@ -1,0 +1,19 @@
+{
+  "name": "stephanie",
+  "version": "1.0.0",
+  "description": "an Excercise tracker",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Excercise tracker"
+  },
+  "author": "Stephanie Uzong",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
