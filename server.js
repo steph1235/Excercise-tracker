@@ -4,23 +4,25 @@ const mongoose=require('mongoose');
 const cors=require('cors');
 const session = require('express-session');
 const bodyParser=require('body-parser');
-const routes = require('./routes/user.js'); 
-
+const userrouter = require('./routes/user'); 
+const excerciserouter= require('./routes/excercise')
 require('dotenv').config;
 app.use(cors());
-const port= process.env.PORT||4000;
+
+const DB='mongodb+srv://stephanie:steph140@tracker.4iookc8.mongodb.net/?retryWrites=true&w=majority';
+mongoose
+  .connect(DB, { useNewUrlParser: true })
+  .then(() => console.log(`Database connected successfully`))
+  .catch((err) => console.log(err));
+
+// Since mongoose's Promise is deprecated, we override it with Node's Promise
+mongoose.Promise = global.Promise;
+
+const port= process.env.PORT||7000;
 
 
-const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
-);
-const connection = mongoose.connection;
-connection.once('open', () => {
-  console.log("MongoDB database connection established successfully");
-})
-
-
-
+app.use('excercise', excerciserouter);
+app.use('user', userrouter);
 app.use(bodyParser.json());
 app.use((req,res,next)=>{
     res.header('Access-Control-Allow-Origin', '*');
@@ -29,14 +31,10 @@ app.use((req,res,next)=>{
 
 })
 
-app.get('/login', (req,res)=>{
-
-})
 app.use(express.json());
-app.use('../user', routes);
 
 console.log('testing thing');
 
 app.listen(port, ()=>{
-    console.log('server runnining at 4000')
+    console.log('server runnining at 7000')
 })
